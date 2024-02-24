@@ -23,6 +23,13 @@
         <div class="product-info">
             <a :href="linkCamtCmu">{{product}}</a>
             <p>{{description}}</p>
+
+            <p v-if="inventory > 10">In Stock</p>
+            <p v-else-if="inventory <= 10 && inventory > 0">Almost out of Stock</p>
+            <p v-else>Out of Stock</p>
+
+            <p v-if="onSale">on sale</p>
+            <p v-else>not on sale</p>
         </div>
     </div>
 
