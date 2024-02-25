@@ -2,16 +2,29 @@ const { createApp, ref, computed } = Vue;
 
 const app = createApp({
     setup() {
-        const cart = ref(0);
+        const cart = ref([]);
         const premium = ref(false);
-        const variant = ref([
-            {id: 2234, color: 'green', image: './assets/image/socks_green.jpg', quantity: 50, onSale: true},
-            {id: 2235, color: 'blue', image: './assets/image/socks_blue.jpg', quantity: 0, onSale: false}
-        ]);
+        
+        function updateCart(id) {
+            const itemInCart = cart.value.find(item => item[id] > 0);
+            if (!itemInCart) {
+                cart.value.push({[id]: 1});
+            } else {
+                itemInCart[id]++;
+            }
+        };
+        function deleteCart(id) {
+            const itemInCart = cart.value.find(item => item[id] > 0);
+            if (itemInCart) {
+                itemInCart[id]--;
+            }
+        }
+
         return {
             cart,
             premium,
-            variant
+            updateCart,
+            deleteCart
         }
     }
 });

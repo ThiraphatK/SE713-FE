@@ -13,6 +13,7 @@ const productDetail = {
             <div v-for="(object, index) in variant" :key="object.id" @mouseover="updateVariant(index)" class="color-circle" :style="{backgroundColor: object.color}">{{object.color}}</div>
             <div v-for="object in sizes" :key="object.id">{{object.size}}</div>
             <button class="button" :disabled="!inStock" :class="{disabledButton: !inStock}" @click="addToCart">Add To Cart</button>
+            <button class="button" :disabled="!inStock" :class="{disabledButton: !inStock}" @click="deleteCart">Delete Cart</button>
             <p>{{inStock}}</p>
             <button class="button" @click="updateInStock">In Stock button</button>
             <p>Shipping: {{shipping}}</p>
@@ -20,7 +21,7 @@ const productDetail = {
     props:{
         premium: Boolean,
     },
-    setup(props){
+    setup(props, {emit}){
             const product = ref('Boots');
             const band = ref('SE 331');
             const description = ref('A pair of warm, fuzzy boots');
@@ -33,7 +34,7 @@ const productDetail = {
             ]);
             const variant = ref([
                 {id: 2234, color: 'green', image: './assets/image/socks_green.jpg', quantity: 50, onSale: true},
-                {id: 2235, color: 'blue', image: './assets/image/socks_blue.jpg', quantity: 0, onSale: false}
+                {id: 2235, color: 'blue', image: './assets/image/socks_blue.jpg', quantity: 10, onSale: false}
             ]);
 
             const selectedVariant = ref(0);
@@ -47,7 +48,11 @@ const productDetail = {
             const cart = ref(0);
 
             function addToCart() {
-                cart.value += 1;
+                emit('add-to-cart', variant.value[selectedVariant.value].id);
+            }
+
+            function deleteCart() {
+                emit('delete-to-cart', variant.value[selectedVariant.value].id);
             }
 
             function updateInStock() {
@@ -87,7 +92,8 @@ const productDetail = {
                 addToCart,
                 updateInStock,
                 updateVariant,
-                shipping
+                shipping,
+                deleteCart
             }
         }
 };
