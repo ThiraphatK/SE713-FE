@@ -30,6 +30,15 @@
 
             <p v-if="onSale">on sale</p>
             <p v-else>not on sale</p>
+
+            <ul>
+                <li v-for="item in details">{{item}}</li>
+            </ul>
+
+            <div v-for="object in variant" :key="object.id">{{object.color}}</div>
+
+            <div v-for="object in sizes" :key="object.id">{{object.size}}</div>
+
         </div>
     </div>
 
