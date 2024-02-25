@@ -17,6 +17,8 @@ const productDetail = {
             <p>{{inStock}}</p>
             <button class="button" @click="updateInStock">In Stock button</button>
             <p>Shipping: {{shipping}}</p>
+            <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+            <review-form @review-submitted="addReview"></review-form>
         </div>`,
     props:{
         premium: Boolean,
@@ -36,6 +38,13 @@ const productDetail = {
                 {id: 2234, color: 'green', image: './assets/image/socks_green.jpg', quantity: 50, onSale: true},
                 {id: 2235, color: 'blue', image: './assets/image/socks_blue.jpg', quantity: 10, onSale: false}
             ]);
+
+            const reviews = ref([]);
+            console.log(reviews);
+            function addReview(review) {
+                reviews.value.push(review);
+                console.log(reviews.value);
+            }
 
             const selectedVariant = ref(0);
 
@@ -93,7 +102,9 @@ const productDetail = {
                 updateInStock,
                 updateVariant,
                 shipping,
-                deleteCart
+                deleteCart,
+                addReview,
+                reviews
             }
         }
 };
