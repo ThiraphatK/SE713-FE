@@ -16,6 +16,11 @@ const reviewForm = {
                 <option>2</option>
                 <option>1</option>
             </select>
+            <label for="recommend">Would you recommend this product?</label>
+            <select id="recommend" v-model="form.recommend">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
             <input class="button" value="Submit" type="submit">
         </form>`,
     setup(props, {emit}){
@@ -23,17 +28,20 @@ const reviewForm = {
             name: '',
             review: '',
             rating: null,
+            recommend: ''
         })
         function onSubmit() {
             const productReview = {
                 name: form.name,
                 review: form.review,
                 rating: form.rating,
+                recommend: form.recommend
             }
             emit('review-submitted', productReview);
-            // form.name = '';
-            // form.review = '';
-            // form.rating = null;
+            form.name = '';
+            form.review = '';
+            form.rating = null;
+            form.recommend = '';
         }
         return {
             form,
